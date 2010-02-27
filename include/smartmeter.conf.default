@@ -1,0 +1,6 @@
+<?php
+	$smreader_user='smreader';
+	$smreader_password='';
+	$smlogger_user='smlogger';
+	$smlogger_password='';
+?>
