@@ -51,5 +51,8 @@
 	}
 	$time_delta = make_a_difference($controllertime, microtime(true));
 	$result = pg_query($conn, "insert into public.pulses (servertime, controllertime, time_delta, channel, id) VALUES (NOW(), to_timestamp('$controllertime'), $time_delta, '$port', '$interne_id' )");
-
+	// optional passthru to volkszaehler.org
+	if ($httplog_passthru=="yes") {
+		fopen("http://volkszaehler.org/httplog/httplog.php?time=".$controllertime."&uuid=".$uuid."&port=".$port."&passthru=yes", "r");
+	}
 ?>

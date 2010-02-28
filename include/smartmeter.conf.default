@@ -3,4 +3,5 @@
 	$smreader_password='';
 	$smlogger_user='smlogger';
 	$smlogger_password='';
+	$httplog_passthru="yes";
 ?>
