@@ -1,3 +1,4 @@
+<?php
 /*
 * Copyright (c) 2010 by Justin Otherguy <justin@justinotherguy.org>
 * 
@@ -17,6 +18,7 @@
 * For more information on the GPL, please go to:
 * http://www.gnu.org/copyleft/gpl.html
 */  
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 	<head>

@@ -1,3 +1,4 @@
+<?php
 /*
 * Copyright (c) 2010 by Justin Otherguy <justin@justinotherguy.org>
 * 
@@ -17,7 +18,6 @@
 * For more information on the GPL, please go to:
 * http://www.gnu.org/copyleft/gpl.html
 */  
-<?php
 	include ('smartmeter.conf');
 	function UnixTime($psql_timestamp){
 		if(preg_match('/(\d{4})\-(\d{2})\-(\d{2}) (\d{2}):(\d{2}):(\d{2}).(\d{6})/', $psql_timestamp, $pieces)
