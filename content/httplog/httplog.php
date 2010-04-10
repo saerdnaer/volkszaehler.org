@@ -18,6 +18,7 @@
 * For more information on the GPL, please go to:
 * http://www.gnu.org/copyleft/gpl.html
 */
+	include('smartmeter.conf');
 	// time=<timestamp>
 	// port=P{ABCD}{0-7}
 	// uuid=<01234567-89AB-CDEF...>
