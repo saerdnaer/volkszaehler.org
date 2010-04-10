@@ -59,7 +59,7 @@
 	$interne_id = $line['id'];
 	// falls diese aber leer ist (= noch nicht in der DB existiert), ebenfalls abbrechen
 	if ($interne_id == '') {
-		echo "uuid has not approved yet - Aborting!";
+		echo "uuid has not been approved yet - Aborting!";
 		exit;
 	}
 
