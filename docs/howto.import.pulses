@@ -1,0 +1,1 @@
+psql -d smartmeter -c "COPY pulses FROM '/var/lib/postgresql/pulses.dummy.copy';"

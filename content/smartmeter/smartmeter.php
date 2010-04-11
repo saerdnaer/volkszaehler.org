@@ -103,11 +103,6 @@
 						label: "EG - L3 (P(min): <?php echo round($leistung_PC2_min)?> W, P(max): <?php echo round($leistung_PC2_max) ?> W, P(avg): <?php echo round(calc_leistung_avg("2"),0); ?> W, E: <?php echo round(calc_consumed_energy("2"), 3); ?> kWh, Verbrauch/a: <?php echo round(calc_leistung_avg("2")*24*365/1000,0); ?> kWh)",
 						data: [ <?php if ( count ($PC2) > 0 ) { array_walk($PC2, 'array_print'); } ?> ] ,
 						color: "red"
-					},
-					"l4": {
-						label: "Heizung - (P(min): <?php echo round($leistung_PC3_min)?> W, P(max): <?php echo round($leistung_PC3_max) ?> W, P(avg): <?php echo round(calc_leistung_avg("3"),0); ?> W, E: <?php echo round(calc_consumed_energy("3"), 3); ?> kWh, Verbrauch/a: <?php echo round(calc_leistung_avg("3")*24*365/1000,0); ?> kWh)",
-						data: [ <?php if ( count ($PC3) > 0 ) { array_walk($PC3, 'array_print'); } ?> ] ,
-						color: "green"
 					}
 				};
 

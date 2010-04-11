@@ -52,9 +52,13 @@
 		global $interne_id, $conn, $resolution, $min, $imp_min, $max, $imp_max;
 		//error_reporting (E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
-		if ($uuid == "") {
-			echo "Parameter uuid is required - aborting!";
-			exit;
+		if (($uuid == "") or ($uuid == "12345678-1234-1234-1234-123456789012")) {
+			echo "Parameter uuid is required - running in demo mode!";
+			$uuid = "12345678-1234-1234-1234-123456789012";
+			$min = "2010-04-01, 00:00";
+			$imp_min = UnixTime($min);
+			$max = "2010-04-02, 00:00";
+			$imp_max = UnixTime("2010-04-02, 00:00");
 		}
 
 		init_psql();
@@ -78,14 +82,26 @@
 			$min = UnixTime($_GET["min"]);
 			$imp_min = $min;
 		} else {
-			$imp_min = (date ("U",time())-86400);
+			if ($uuid == "12345678-1234-1234-1234-123456789012") {
+				// running in demo mode
+				$min = "2010-04-01, 00:00";
+				$imp_min = UnixTime($min);
+			} else {
+				$imp_min = (date ("U",time())-86400);
+			}
 		}
 		# do the same for max and imp_max
 		if ( $_GET["max"] != "" ) { 
 			$max = UnixTime($_GET["max"]);
 			$imp_max = $max;
 		} else {
-			$imp_max = date ("U");
+			if ($uuid == "12345678-1234-1234-1234-123456789012") {
+				// running in demo mode
+				$max = "2010-04-02, 00:00";
+				$imp_max = UnixTime("2010-04-02, 00:00");
+			} else {
+				$imp_max = date ("U");
+			}
 		}
 		# mal sehen, ob resolution mit angegeben wurde
 		if ( $_GET["resolution"] != "" ) {
@@ -93,13 +109,25 @@
 		}
 	
 		global $teiler, $anfang, $ende, $delta;
-		$anfang=date("Y-m-d H:i:s", $imp_min);
-		$ende=date("Y-m-d H:i:s", $imp_max);
-		$delta=UnixTime($ende)-UnixTime($anfang);
-
+		if ($uuid == "12345678-1234-1234-1234-123456789012") {
+			// running in demo mode
+			$anfang=date("Y-m-d H:i:s", $imp_min);
+			$ende=date("Y-m-d H:i:s", $imp_max);
+			$delta=UnixTime($ende)-UnixTime($anfang);
+		} else {
+			$anfang=date("Y-m-d H:i:s", $imp_min);
+			$ende=date("Y-m-d H:i:s", $imp_max);
+			$delta=UnixTime($ende)-UnixTime($anfang);
+		}
 		return $uuid;
+		echo $_SERVER['PHP_SELF']."?min=".date("Y-m-d, H:i:s", $imp_min - $delta/3);
+		echo "&max=".date("Y-m-d, H:i:s", $imp_max - $delta/3);
+		if ( $resolution != "" ) { 
+			echo "&resolution=". $resolution;
+		}
+		echo "&uuid=".$uuid;
 	}
-	
+
 	function screenwidth(){
 		if ( strstr ($_SERVER['HTTP_USER_AGENT'], 'iPhone')) {
 			echo '320';
@@ -208,18 +236,17 @@
 		return $PC;
 	}
 
-	function fill_data_arrays($id_0, $id_1, $id_2, $id_3) {
-		global $resolution, $conn, $anfang, $ende, $delta, $teiler, $leistung_PC0, $leistung_PC1, $leistung_PC2, $leistung_PC3, $PC0, $PC1, $PC2, $PC3, $leistung_PC0_max, $leistung_PC1_max, $leistung_PC2_max, $leistung_PC3_max, $leistung_PC0_min, $leistung_PC1_min, $leistung_PC2_min, $leistung_PC3_min;
+	function fill_data_arrays($id_0, $id_1, $id_2) {
+		global $resolution, $conn, $anfang, $ende, $delta, $teiler, $leistung_PC0, $leistung_PC1, $leistung_PC2, $PC0, $PC1, $PC2, $leistung_PC0_max, $leistung_PC1_max, $leistung_PC2_max, $leistung_PC0_min, $leistung_PC1_min, $leistung_PC2_min;
 		$schwelle = 10;
 		if ($resolution != "") {
 			$teiler=($delta/$resolution);
 		} else {
 			$teiler=100;
 		}
-		if (!$id_0 == '') $PC0 = fill_array($conn, $id_0, $anfang, $ende, $schwelle, $teiler);
-		if (!$id_1 == '') $PC1 = fill_array($conn, $id_1, $anfang, $ende, $schwelle, $teiler);
-		if (!$id_2 == '') $PC2 = fill_array($conn, $id_2, $anfang, $ende, $schwelle, $teiler);
-		if (!$id_3 == '') $PC3 = fill_array($conn, $id_3, $anfang, $ende, $schwelle, $teiler);
+		if (strlen($id_0) != 0) $PC0 = fill_array($conn, $id_0, $anfang, $ende, $schwelle, $teiler);
+		if (strlen($id_1) != 0) $PC1 = fill_array($conn, $id_1, $anfang, $ende, $schwelle, $teiler);
+		if (strlen($id_2) != 0) $PC2 = fill_array($conn, $id_2, $anfang, $ende, $schwelle, $teiler);
 
 		if (count($PC0)) { 
 			$leistung_PC0_min = min($PC0); 
@@ -232,10 +259,6 @@
 		if (count($PC2)) { 
 			$leistung_PC2_min = min($PC2); 
 			$leistung_PC2_max = max($PC2); 
-		};
-		if (count($PC3)) { 
-			$leistung_PC3_min = min($PC3); 
-			$leistung_PC3_max = max($PC3); 
 		};
 	}
 
@@ -255,7 +278,7 @@
 		}
 		echo "&uuid=".$uuid;
 	}
-		
+
 	function move_one_third_right() {
 		global $resolution, $imp_min, $imp_max, $delta, $uuid;
 		echo $_SERVER['PHP_SELF']."?min=".date("Y-m-d, H:i:s", $imp_min + $delta/3);
