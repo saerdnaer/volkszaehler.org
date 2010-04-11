@@ -19,8 +19,6 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE channels (
-    controller character(20),
-    channel character(5),
     function character(100),
     resolution integer DEFAULT 1000,
     id integer,
@@ -51,8 +49,6 @@ COMMENT ON COLUMN channels.resolution IS 'resolution of power meter [pulses/kWh]
 CREATE TABLE pulses (
     servertime timestamp without time zone NOT NULL,
     controllertime timestamp without time zone,
-    controller character(20),
-    channel character(5),
     id integer,
     time_delta real
 );
@@ -64,7 +60,7 @@ ALTER TABLE public.pulses OWNER TO postgres;
 -- Name: COLUMN pulses.time_delta; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN pulses.time_delta IS 'difference between controller and servertime';
+COMMENT ON COLUMN pulses.time_delta IS 'difference between controllertime and servertime';
 
 
 --
