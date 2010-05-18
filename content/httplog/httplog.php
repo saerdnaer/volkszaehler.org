@@ -5,7 +5,7 @@
 	// uuid=<01234567-89AB-CDEF...>
 	// 
 	if(!preg_match('/^([timeportuuidPA-D0-9\-a-fA-F\=\&]*)$/',$_SERVER['QUERY_STRING']))
-		die("");
+		die("not expected format");
 
 	function make_a_difference($system_date, $sent_date) {
 		// erwartet beide Daten als Unix-Epoch (Sekunden seit 1970-01-01 00:00:00)

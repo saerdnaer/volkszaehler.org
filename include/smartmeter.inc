@@ -1,6 +1,7 @@
 <?php
 	include ('smartmeter.conf');
 	function UnixTime($psql_timestamp){
+		// WTF?
 		if(preg_match('/(\d{4})\-(\d{2})\-(\d{2}) (\d{2}):(\d{2}):(\d{2}).(\d{6})/', $psql_timestamp, $pieces)
 			|| preg_match('/(\d{4})\-(\d{2})\-(\d{2}) (\d{2}):(\d{2}):(\d{2}).(\d{5})/', $psql_timestamp, $pieces)
 			|| preg_match('/(\d{4})\-(\d{2})\-(\d{2}) (\d{2}):(\d{2}):(\d{2}).(\d{4})/', $psql_timestamp, $pieces)
@@ -223,7 +224,8 @@
 	function array_print($item2, $key) {
 		#js erwartet unixtimestamp in us -> *1000
 		#js berücksichtigt nicht die Zeitzone -> Korrektur für Arme: +3600s
-		$keyx1000 = 1000*($key+3600);
+		# Sommerzeit: *2 --Andi
+		$keyx1000 = 1000*($key+3600*2);
 		echo "[ $keyx1000, $item2], ";
 	}	
 		
