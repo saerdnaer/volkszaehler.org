@@ -190,7 +190,7 @@
 		return $PC;
 	}
 
-	function fill_data_arrays($id_0, $id_1, $id_2, $id_3) {
+	function fill_data_arrays($id_0, $id_1, $id_2, $id_3 = '') {
 		global $resolution, $conn, $anfang, $ende, $delta, $teiler, $leistung_PC0, $leistung_PC1, $leistung_PC2, $leistung_PC3, $PC0, $PC1, $PC2, $PC3, $leistung_PC0_max, $leistung_PC1_max, $leistung_PC2_max, $leistung_PC3_max, $leistung_PC0_min, $leistung_PC1_min, $leistung_PC2_min, $leistung_PC3_min;
 		$schwelle = 10;
 		if ($resolution != "") {
@@ -236,7 +236,7 @@
 		if ( $resolution != "" ) { 
 			echo "&resolution=". $resolution;
 		}
-		echo "&uuid=".$uuid;
+		//echo "&uuid=".$uuid;
 	}
 		
 	function move_one_third_right() {
@@ -246,7 +246,7 @@
 		if ( $resolution != "" ) { 
 			echo "&resolution=". $resolution;
 		}
-		echo "&uuid=".$uuid;
+		//echo "&uuid=".$uuid;
 	}
 		
 	function move_left() {
@@ -256,7 +256,7 @@
 		if ( $resolution != "" ) { 
 			echo "&resolution=". $resolution;
 		}
-		echo "&uuid=".$uuid;
+		//echo "&uuid=".$uuid;
 	}
 		
 	function move_right() {
@@ -266,7 +266,7 @@
 		if ( $resolution != "" ) { 
 			echo "&resolution=". $resolution;
 		}
-		echo "&uuid=".$uuid;
+		//echo "&uuid=".$uuid;
 	}
 		
 	function half_window_size(){
@@ -278,7 +278,7 @@
 		if ( $resolution != "" ) { 
 			echo "&resolution=". $resolution;
 		}
-		echo "&uuid=".$uuid;
+		//echo "&uuid=".$uuid;
 	}
 
 	function double_window_size(){
@@ -290,6 +290,6 @@
 		if ( $resolution != "" ) { 
 			echo "&resolution=". $resolution;
 		}
-		echo "&uuid=".$uuid;
+		//echo "&uuid=".$uuid;
 	}
 ?>

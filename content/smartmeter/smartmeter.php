@@ -3,8 +3,8 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<?php
-			include("smartmeter.inc");
-			$uuid=init($_GET["uuid"]);
+			include("../../include/smartmeter.inc");
+			$uuid=init(empty($_GET["uuid"]) ? '12345678-1234-1234-1234-123456789ABC' : $_GET["uuid"]);
 			# only set refresh if max is not set - doesn't make sense if not looking at current second
 			if ($max == "") echo "<meta http-equiv='refresh' content='".get_refresh_interval()."' />";
 			// das hier ist noch hart verdrahtet - das muss gg. die "dynamische" Variante ersetzt werden: uuid -> DB -> ids
@@ -66,17 +66,17 @@
 
 		<script id="source" language="javascript" type="text/javascript">
 			$(function () {
-				var datasets = {
+				var datasets = { <?php /*
 					"l1": {
 						label: "EG - L1 (P(min): <?php echo round($leistung_PC0_min)?> W, P(max): <?php echo round($leistung_PC0_max) ?> W, P(avg): <?php echo round(calc_leistung_avg("0"),0); ?> W, E: <?php echo round(calc_consumed_energy("0"), 3); ?> kWh, Verbrauch/a: <?php echo round(calc_leistung_avg("0")*24*365/1000,0); ?> kWh)",
 						data: [ <?php if ( count ($PC0) > 0 ) { array_walk($PC0, 'array_print'); } ?> ] ,
 						color: "blue"
-					},
+					},*/?>
 					"l2": {
-						label: "EG - L2 (P(min): <?php echo round($leistung_PC1_min)?> W, P(max): <?php echo round($leistung_PC1_max) ?> W, P(avg): <?php echo round(calc_leistung_avg("1"),0); ?> W, E: <?php echo round(calc_consumed_energy("1"), 3); ?> kWh, Verbrauch/a: <?php echo round(calc_leistung_avg("1")*24*365/1000,0); ?> kWh)",
+						label: "Kapsel (P(min): <?php echo round($leistung_PC1_min)?> W, P(max): <?php echo round($leistung_PC1_max) ?> W, P(avg): <?php echo round(calc_leistung_avg("1"),0); ?> W, E: <?php echo round(calc_consumed_energy("1"), 3); ?> kWh, Verbrauch/a: <?php echo round(calc_leistung_avg("1")*24*365/1000,0); ?> kWh)",
 						data: [ <?php if ( count ($PC1) > 0 ) { array_walk($PC1, 'array_print'); } ?> ] ,
-						color: "yellow"
-						},
+						color: "orange"
+						} <?php /*,
 					"l3": {
 						label: "EG - L3 (P(min): <?php echo round($leistung_PC2_min)?> W, P(max): <?php echo round($leistung_PC2_max) ?> W, P(avg): <?php echo round(calc_leistung_avg("2"),0); ?> W, E: <?php echo round(calc_consumed_energy("2"), 3); ?> kWh, Verbrauch/a: <?php echo round(calc_leistung_avg("2")*24*365/1000,0); ?> kWh)",
 						data: [ <?php if ( count ($PC2) > 0 ) { array_walk($PC2, 'array_print'); } ?> ] ,
@@ -86,7 +86,7 @@
 						label: "Heizung - (P(min): <?php echo round($leistung_PC3_min)?> W, P(max): <?php echo round($leistung_PC3_max) ?> W, P(avg): <?php echo round(calc_leistung_avg("3"),0); ?> W, E: <?php echo round(calc_consumed_energy("3"), 3); ?> kWh, Verbrauch/a: <?php echo round(calc_leistung_avg("3")*24*365/1000,0); ?> kWh)",
 						data: [ <?php if ( count ($PC3) > 0 ) { array_walk($PC3, 'array_print'); } ?> ] ,
 						color: "green"
-					}
+					}*/?>
 				};
 
 				// insert checkboxes 

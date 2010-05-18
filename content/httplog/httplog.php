@@ -1,5 +1,5 @@
 <?php 
-	include('smartmeter.conf');
+	include('../../include/smartmeter.conf');
 	// time=<timestamp>
 	// port=P{ABCD}{0-7}
 	// uuid=<01234567-89AB-CDEF...>
@@ -20,8 +20,9 @@
 
 	// all required parameters present?
 	if ($controller == "") {
-		echo "Parameter uuid is required - aborting";
-		exit;
+		$controller = '12345678-1234-1234-1234-123456789ABC';
+		/*echo "Parameter uuid is required - aborting";
+		exit; */
 	} 
 	if ($controllertime == "") {
 		echo "Parameter time is required - aborting";
@@ -52,7 +53,9 @@
 	$time_delta = make_a_difference($controllertime, microtime(true));
 	$result = pg_query($conn, "insert into public.pulses (servertime, controllertime, time_delta, channel, id) VALUES (NOW(), to_timestamp('$controllertime'), $time_delta, '$port', '$interne_id' )");
 	// optional passthru to volkszaehler.org
-	if ($httplog_passthru=="yes") {
+/*	if ($httplog_passthru=="yes") {
 		fopen("http://volkszaehler.org/httplog/httplog.php?time=".$controllertime."&uuid=".$uuid."&port=".$port."&passthru=yes", "r");
 	}
+*/
+	echo "ok";
 ?>
